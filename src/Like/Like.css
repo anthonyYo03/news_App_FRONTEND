@@ -1,0 +1,111 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+/* Like Container */
+.like-container {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: "Poppins", sans-serif;
+  padding: 0.5rem 0;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Like Button */
+.like-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 2px solid #ddd;
+  background-color: #fff;
+  border-radius: 50%;
+  cursor: pointer;
+  color: #999;
+  transition: all 0.3s ease;
+  font-size: 1.25rem;
+  padding: 0;
+}
+
+.like-btn:hover:not(:disabled) {
+  border-color: #dc3545;
+  color: #dc3545;
+  background-color: #fff5f5;
+  transform: scale(1.08);
+}
+
+.like-btn:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+/* Liked State */
+.like-btn.liked {
+  border-color: #dc3545;
+  color: #dc3545;
+  background-color: #ffe5e5;
+  font-weight: 600;
+}
+
+.like-btn.liked:hover:not(:disabled) {
+  background-color: #ffd0d0;
+  transform: scale(1.08);
+}
+
+/* Disabled State */
+.like-btn:disabled,
+.like-btn.disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Like Count Text */
+.like-count {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #666;
+  min-width: 70px;
+  white-space: nowrap;
+}
+
+.like-loading {
+  font-size: 0.85rem;
+  color: #999;
+  font-style: italic;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .like-container {
+    gap: 0.5rem;
+  }
+
+  .like-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 1.1rem;
+  }
+
+  .like-count {
+    font-size: 0.9rem;
+    min-width: 60px;
+  }
+}
+
+@media (max-width: 480px) {
+  .like-container {
+    gap: 0.4rem;
+  }
+
+  .like-btn {
+    width: 32px;
+    height: 32px;
+    border-width: 1.5px;
+    font-size: 1rem;
+  }
+
+  .like-count {
+    font-size: 0.85rem;
+    min-width: 50px;
+  }
+}

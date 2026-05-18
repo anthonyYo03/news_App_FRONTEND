@@ -1,0 +1,379 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+/* Page Root */
+.page-root {
+  font-family: "Poppins", sans-serif;
+  min-height: 100vh;
+  background-color: #f0f2f5;
+  padding: 2rem 1rem;
+}
+
+/* Page Header */
+.page-header {
+  max-width: 900px;
+  margin: 0 auto 2rem auto;
+  text-align: center;
+}
+
+.page-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.page-title span {
+  color: #007bff;
+  font-weight: 700;
+}
+
+/* Form Card */
+.form-card {
+  max-width: 900px;
+  margin: 0 auto;
+  background: #fff;
+  padding: 2.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.form-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Form Field */
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-field--inline {
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.form-lbl {
+  display: block;
+  font-weight: 600;
+  color: #333;
+  font-size: 0.95rem;
+  text-transform: capitalize;
+}
+
+.form-inp {
+  padding: 0.85rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-family: "Poppins", sans-serif;
+  background-color: #fff;
+  color: #333;
+  transition: all 0.3s ease;
+}
+
+.form-inp:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+  background-color: #fff;
+}
+
+.form-inp:disabled {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.form-inp::placeholder {
+  color: #aaa;
+}
+
+/* Image Upload */
+.image-dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 3rem;
+  border: 2px dashed #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.image-dropzone:hover {
+  border-color: #007bff;
+  background-color: #f0f7ff;
+}
+
+.image-dropzone-icon {
+  font-size: 3rem;
+  display: block;
+}
+
+.image-dropzone-text {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+}
+
+.image-dropzone-hint {
+  font-size: 0.85rem;
+  color: #999;
+  text-align: center;
+}
+
+/* Image Preview */
+.image-preview-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+
+.image-preview {
+  max-width: 100%;
+  max-height: 400px;
+  border-radius: 8px;
+  object-fit: contain;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.image-remove-btn {
+  align-self: center;
+}
+
+/* Toggle Button */
+.toggle-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 60px;
+  height: 32px;
+  padding: 4px;
+  background-color: #ddd;
+  border: 2px solid #ddd;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.toggle-btn:hover:not(:disabled) {
+  border-color: #bbb;
+  background-color: #ccc;
+}
+
+.toggle-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.toggle-btn--on {
+  background-color: #28a745;
+  border-color: #28a745;
+}
+
+.toggle-btn--on:hover:not(:disabled) {
+  background-color: #218838;
+  border-color: #218838;
+}
+
+.toggle-knob {
+  position: absolute;
+  left: 4px;
+  width: 24px;
+  height: 24px;
+  background-color: #fff;
+  border-radius: 50%;
+  transition: left 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-btn--on .toggle-knob {
+  left: calc(100% - 28px);
+}
+
+.toggle-label {
+  font-size: 0.9rem;
+  color: #666;
+  margin-left: 0.5rem;
+  font-weight: 500;
+}
+
+/* Form Actions */
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+  flex-wrap: wrap;
+}
+
+.form-actions button {
+  padding: 0.85rem 2rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+  min-width: 140px;
+}
+
+.form-actions button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Button Styles */
+.btn-ghost {
+  background-color: #f0f2f5;
+  color: #333;
+  border: 1px solid #ddd;
+}
+
+.btn-ghost:hover:not(:disabled) {
+  background-color: #e0e2e5;
+  border-color: #bbb;
+}
+
+.btn-ghost:active:not(:disabled) {
+  background-color: #d0d2d5;
+}
+
+.btn-gold {
+  background-color: #007bff;
+  color: #fff;
+  border: 1px solid #007bff;
+}
+
+.btn-gold:hover:not(:disabled) {
+  background-color: #0056b3;
+  border-color: #0056b3;
+  box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
+}
+
+.btn-gold:active:not(:disabled) {
+  background-color: #003d82;
+}
+
+/* Button Spinner */
+.btn-spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 3px solid #fff;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .page-root {
+    padding: 1rem 0.75rem;
+  }
+
+  .page-title {
+    font-size: 2rem;
+  }
+
+  .form-card {
+    padding: 1.5rem;
+  }
+
+  .form-card form {
+    gap: 1.5rem;
+  }
+
+  .image-dropzone {
+    padding: 2rem 1rem;
+  }
+
+  .image-dropzone-icon {
+    font-size: 2rem;
+  }
+
+  .form-actions {
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .form-actions button {
+    min-width: 100%;
+  }
+
+  .toggle-btn {
+    margin-left: 0;
+  }
+
+  .form-field--inline {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-root {
+    padding: 1rem;
+  }
+
+  .page-title {
+    font-size: 1.5rem;
+  }
+
+  .form-card {
+    padding: 1rem;
+    border-radius: 8px;
+  }
+
+  .page-header {
+    margin-bottom: 1.5rem;
+  }
+
+  .form-card form {
+    gap: 1rem;
+  }
+
+  .image-preview {
+    max-height: 250px;
+  }
+
+  .image-dropzone-text {
+    font-size: 0.9rem;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .form-actions button {
+    min-width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+  }
+}

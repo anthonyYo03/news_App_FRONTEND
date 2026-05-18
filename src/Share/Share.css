@@ -1,0 +1,294 @@
+/* ── Trigger (next to Like and Comments) ── */
+.share-trigger {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.share-trigger-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #555;
+  padding: 4px;
+  border-radius: 50%;
+  transition:
+    color 0.2s ease,
+    background 0.2s ease,
+    transform 0.15s ease;
+}
+
+.share-trigger-btn:hover {
+  color: #1a1a2e;
+  background: rgba(0, 0, 0, 0.06);
+  transform: scale(1.1);
+}
+
+.share-trigger-count {
+  font-size: 13px;
+  color: #777;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* ── Overlay ── */
+.share-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  animation: overlayIn 0.2s ease;
+}
+
+@keyframes overlayIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ── Sheet ── */
+.share-sheet {
+  background: #fff;
+  border-radius: 20px 20px 0 0;
+  width: 100%;
+  max-width: 520px;
+  padding: 0 0 28px;
+  box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.14);
+  animation: sheetUp 0.28s cubic-bezier(0.34, 1.4, 0.64, 1);
+  position: relative;
+}
+
+@keyframes sheetUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ── Handle bar ── */
+.share-handle {
+  width: 36px;
+  height: 4px;
+  background: #ddd;
+  border-radius: 4px;
+  margin: 12px auto 0;
+}
+
+/* ── Header ── */
+.share-header {
+  padding: 16px 20px 12px;
+  border-bottom: 1px solid #f0f0f0;
+  position: relative;
+}
+
+.share-header-text {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #1a1a2e;
+  letter-spacing: -0.2px;
+}
+
+.share-subtitle {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: #999;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: calc(100% - 36px);
+}
+
+.share-close-btn {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  background: #f5f5f5;
+  border: none;
+  cursor: pointer;
+  color: #555;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background 0.15s,
+    color 0.15s,
+    transform 0.15s;
+}
+
+.share-close-btn:hover {
+  background: #ebebeb;
+  color: #1a1a2e;
+  transform: rotate(90deg);
+}
+
+/* ── Platform grid ── */
+.share-platforms {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  padding: 16px 16px 8px;
+}
+
+.share-platform-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 14px;
+  transition:
+    background 0.15s ease,
+    transform 0.15s ease;
+}
+
+.share-platform-btn:hover {
+  background: #f7f7f7;
+  transform: translateY(-2px);
+}
+
+.share-platform-btn:active {
+  transform: scale(0.96);
+}
+
+.share-platform-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--platform-color) 12%, white);
+  color: var(--platform-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+  box-shadow: 0 2px 8px
+    color-mix(in srgb, var(--platform-color) 20%, transparent);
+}
+
+.share-platform-btn:hover .share-platform-icon {
+  background: color-mix(in srgb, var(--platform-color) 18%, white);
+}
+
+.share-platform-name {
+  font-size: 11.5px;
+  font-weight: 500;
+  color: #444;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  text-align: center;
+}
+
+/* ── Copy link row ── */
+.share-copy-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 8px 16px 0;
+  background: #f7f7f7;
+  border-radius: 12px;
+  padding: 10px 14px;
+}
+
+.share-copy-url {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+  color: #888;
+  font-size: 12px;
+  font-family: "Segoe UI", system-ui, sans-serif;
+}
+
+.share-copy-url span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.share-copy-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 16px;
+  background: #1a1a2e;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  transition:
+    background 0.15s,
+    transform 0.15s;
+  flex-shrink: 0;
+}
+
+.share-copy-btn:hover {
+  background: #2d2d4e;
+  transform: scale(1.04);
+}
+
+.share-copy-btn.copied {
+  background: #1a7a4a;
+}
+
+/* ── Responsive: center on wide screens ── */
+@media (min-width: 540px) {
+  .share-overlay {
+    align-items: center;
+  }
+
+  .share-sheet {
+    border-radius: 20px;
+    max-width: 420px;
+    padding-bottom: 20px;
+    animation: sheetCenter 0.26s cubic-bezier(0.34, 1.4, 0.64, 1);
+  }
+
+  @keyframes sheetCenter {
+    from {
+      opacity: 0;
+      transform: scale(0.94) translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  .share-handle {
+    display: none;
+  }
+}
