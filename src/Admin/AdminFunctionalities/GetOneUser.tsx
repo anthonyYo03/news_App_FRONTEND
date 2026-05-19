@@ -18,6 +18,7 @@ export default function AdminGetOneUser() {
       try {
         setLoading(true);
         const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/user/${id}`, { withCredentials: true });
+        console.log(response.data);
         setOneUser(response.data.user || null); // single object
       } catch (err: any) {
         toast.error(err.response?.data?.message || 'Failed to load user');
@@ -89,18 +90,25 @@ export default function AdminGetOneUser() {
             <p><strong>User ID:</strong> {user.user_id}</p>
             <p><strong>Email:</strong> {user.email}</p>
             <p><strong>Username:</strong> {user.username}</p>
-            <p><strong>User Type ID:</strong> {user.user_type_id}</p>
+            <p><strong>User Type ID:</strong> {user.user_type_id ||'No user type selected'}</p>
             <p><strong>Created At:</strong> {formatDate(user.createdAt)}</p>
           </div>
         )}
 
         <div className="user-action-buttons">
           <button 
-            className="btn btn-secondary"
-            onClick={()=>{navigate(`/adminEditUser/${id}`)}}
-          >
-            Edit
-          </button>
+  className="btn btn-secondary"
+  onClick={() => navigate(`/adminEditUser/${id}`, {
+    state: {
+      email: user?.email,
+      username: user?.username,
+      password: '',
+      user_type_id: user?.user_type_id,
+    }
+  })}
+>
+  Edit
+</button>
           <DeleteUser id={user?.user_id} />
         </div>
       </div>

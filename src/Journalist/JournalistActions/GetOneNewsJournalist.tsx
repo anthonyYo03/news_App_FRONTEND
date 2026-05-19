@@ -106,12 +106,20 @@ export default function GetOneNewsJournalist() {
           ← Back
         </button>
         <button 
-          className="btn btn-secondary"
-          onClick={() => navigate(`/editNews/${news?.news_id}`)}
-          disabled={!news}
-        >
-          Edit
-        </button>
+  className="btn btn-secondary"
+  onClick={() => navigate(`/editNews/${news?.news_id}`, {
+    state: {
+      title: news?.title,
+      description: news?.description,
+      is_important: news?.is_important,
+      image_url: news?.image_url,
+      news_type_id: news?.news_type_id,
+    }
+  })}
+  disabled={!news}
+>
+  Edit
+</button>
         <DeleteNews id={news?.news_id} />
       </div>
     </div>

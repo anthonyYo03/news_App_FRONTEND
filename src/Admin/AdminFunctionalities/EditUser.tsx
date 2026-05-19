@@ -52,7 +52,7 @@ export default function EditUser() {
 
       toast.success('User updated successfully');
 
-      navigate(`getOneUser/${id}`);
+      navigate(`/adminGetOneUsers/${id}`);
     } catch (error: any) {
       toast.error(error?.response?.data?.message || 'Failed to update user');
     } finally {
@@ -67,14 +67,7 @@ export default function EditUser() {
           Edit <span>User</span>
         </h2>
 
-        {/* 
-        <button 
-          className="btn-ghost" 
-          onClick={() => navigate(`/hr/getOneAnnouncement/${id}`)}
-        >
-          Cancel
-        </button> 
-        */}
+        
       </div>
 
       <div className="form-card">

@@ -8,15 +8,30 @@ import GetLastFiveImportantNews from './GetLastFiveImportantNews';
 
 export default function News() {
   const [news, setNews] = useState<NewsType[]>([]);
+  const [selectedType, setSelectedType] = useState<string>('all');
+  const [currentPage, setCurrentPage] = useState(0);
+  const [totalNews, setTotalNews] = useState(0);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
+  const itemsPerPage = 10;
+
+  const newsTypes = ['all', 'local', 'politics', 'sports', 'entertainment', 'international', 'economy'];
 
   useEffect(() => {
     const fetchNews = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/news/all`);
+        const offset = currentPage * itemsPerPage;
+        let url = `${process.env.REACT_APP_BACKEND_URL}/api/news/all?limit=${itemsPerPage}&offset=${offset}`;
+        
+        // Add type filter if selected type is not 'all'
+        if (selectedType !== 'all') {
+          url += `&news_type_id=${selectedType}`;
+        }
+        
+        const response = await axios.get(url);
         setNews(response.data.news || []);
+        setTotalNews(response.data.totalNews || 0);
       } catch (err: any) {
         toast.error(err.response?.data?.message || 'Failed to load news');
         console.error(err);
@@ -26,7 +41,7 @@ export default function News() {
     };
 
     fetchNews();
-  }, []);
+  }, [selectedType, currentPage]);
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -48,7 +63,28 @@ export default function News() {
           Login
         </Link>
       </div>
-        <GetLastFiveImportantNews />
+      <GetLastFiveImportantNews />
+      <div className="filter-section">
+        <label htmlFor="newsTypeFilter">Filter by Type: </label>
+        <select 
+          id="newsTypeFilter"
+          value={selectedType} 
+          onChange={(e) => {
+            setSelectedType(e.target.value);
+            setCurrentPage(0);
+          }}
+          className="news-type-dropdown"
+        >
+          <option value="all">All News</option>
+          <option value="1">Local</option>
+          <option value="2">Politics</option>
+          <option value="3">Sports</option>
+          <option value="4">Entertainment</option>
+          <option value="5">International</option>
+          <option value="6">Economy</option>
+        </select>
+      </div>
+        
       <div className="news-container">
         {loading ? (
           <div className="loading">Loading news...</div>
@@ -90,6 +126,26 @@ export default function News() {
             ))}
           </div>
         )}
+      </div>
+
+      <div className="pagination-container">
+        <button 
+          className="pagination-btn"
+          onClick={() => setCurrentPage(prev => Math.max(prev - 1, 0))}
+          disabled={currentPage === 0}
+        >
+          Previous
+        </button>
+        <span className="pagination-info">
+          Page {currentPage + 1} of {Math.ceil(totalNews / itemsPerPage)} (Total: {totalNews} news)
+        </span>
+        <button 
+          className="pagination-btn"
+          onClick={() => setCurrentPage(prev => prev + 1)}
+          disabled={currentPage >= Math.ceil(totalNews / itemsPerPage) - 1}
+        >
+          Next
+        </button>
       </div>
     </div>
   );

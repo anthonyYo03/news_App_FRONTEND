@@ -17,18 +17,32 @@ export default function GetUser() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
+  const [selectedUserType, setSelectedUserType] = useState<string>('all');
+  const [currentPage, setCurrentPage] = useState(0);
+  const [totalUsers, setTotalUsers] = useState(0);
+  const itemsPerPage = 10;
 
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
+        setLoading(true);
+        const offset = currentPage * itemsPerPage;
+        let url = `${process.env.REACT_APP_BACKEND_URL}/api/user/getAll?limit=${itemsPerPage}&offset=${offset}`;
+        
+        // Add type filter if selected type is not 'all'
+        if (selectedUserType !== 'all') {
+          url += `&user_type_id=${selectedUserType}`;
+        }
+        
         const res = await axios.get<GetUsersResponse>(
-          `${process.env.REACT_APP_BACKEND_URL}/api/user/getAll`,
+          url,
           { withCredentials: true }
         );
 
         setUsers(res.data.users);
+        setTotalUsers(res.data.totalUsers);
       } catch {
         toast.error('Cannot get users');
       } finally {
@@ -37,7 +51,7 @@ export default function GetUser() {
     };
 
     fetchUsers();
-  }, []);
+  }, [currentPage, selectedUserType]);
 
   if (loading) {
     return (
@@ -70,6 +84,10 @@ export default function GetUser() {
         )
         .slice(0, 6)
     : [];
+
+  const totalPages = Math.ceil(totalUsers / itemsPerPage);
+  const hasNextPage = currentPage < totalPages - 1;
+  const hasPrevPage = currentPage > 0;
 
   return (
     <div className="get-user-page">
@@ -113,6 +131,24 @@ export default function GetUser() {
         )}
       </div>
 
+      <div className="filter-section">
+        <label htmlFor="userTypeFilter">Filter by Type: </label>
+        <select 
+          id="userTypeFilter"
+          value={selectedUserType} 
+          onChange={(e) => {
+            setSelectedUserType(e.target.value);
+            setCurrentPage(0);
+          }}
+          className="user-type-dropdown"
+        >
+          <option value="all">All Users</option>
+          <option value="1">Journalist</option>
+          <option value="2">Reader</option>
+          <option value="3">Admin</option>
+        </select>
+      </div>
+
       <div className="user-list-container">
         {users.map((u) => (
           <div
@@ -124,6 +160,26 @@ export default function GetUser() {
             <p>{u.email}</p>
           </div>
         ))}
+      </div>
+
+      <div className="pagination-container">
+        <button 
+          className="pagination-btn"
+          onClick={() => setCurrentPage(prev => Math.max(prev - 1, 0))}
+          disabled={!hasPrevPage}
+        >
+          Previous
+        </button>
+        <span className="pagination-info">
+          Page {currentPage + 1} of {totalPages} (Total: {totalUsers} users)
+        </span>
+        <button 
+          className="pagination-btn"
+          onClick={() => setCurrentPage(prev => prev + 1)}
+          disabled={!hasNextPage}
+        >
+          Next
+        </button>
       </div>
     </div>
   );
