@@ -24,7 +24,7 @@ export default function JournalistDashboard() {
   const [loading, setLoading] = useState(true);
   const itemsPerPage = 10;
 
-  const newsTypes = ['all', 'local', 'politics', 'sports', 'entertainment', 'international', 'economy'];
+  // const newsTypes = ['all', 'local', 'politics', 'sports', 'entertainment', 'international', 'economy'];
 
   useEffect(() => {
     const fetchNews = async () => {
