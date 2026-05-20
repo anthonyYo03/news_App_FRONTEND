@@ -1,4 +1,3 @@
-import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { handleLogout } from '../Logout/Logout';
 import GetUser from './AdminFunctionalities/GetUser';

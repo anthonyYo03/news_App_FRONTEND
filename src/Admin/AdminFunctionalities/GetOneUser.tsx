@@ -4,7 +4,6 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useNavigate, useParams } from 'react-router-dom';
 import './GetOneUser.css';
-import EditUser from './EditUser';
 import DeleteUser from './DeleteUser';
 
 
