@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import {
@@ -25,9 +25,18 @@ export default function Share({ newsId, newsTitle }: ShareProps) {
   const encodedUrl = encodeURIComponent(newsUrl);
   const encodedTitle = encodeURIComponent(newsTitle || 'Check out this news!');
 
+  const fetchShareCount = useCallback(async () => {
+    try {
+      const res = await axios.get(`${API}/api/share/count/${newsId}`, {
+        withCredentials: true,
+      });
+      setShareCount(res.data.totalShares);
+    } catch (_) {}
+  }, [newsId]);
+
   useEffect(() => {
     fetchShareCount();
-  }, [newsId]);
+  }, [fetchShareCount]);
 
   // Close on Escape
   useEffect(() => {
@@ -35,15 +44,6 @@ export default function Share({ newsId, newsTitle }: ShareProps) {
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, []);
-
-  const fetchShareCount = async () => {
-    try {
-      const res = await axios.get(`${API}/api/share/count/${newsId}`, {
-        withCredentials: true,
-      });
-      setShareCount(res.data.totalShares);
-    } catch (_) {}
-  };
 
   // Record the share in the backend then open the platform URL
   const recordAndOpen = async (platformUrl: string) => {

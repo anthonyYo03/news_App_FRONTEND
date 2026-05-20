@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
@@ -18,26 +18,26 @@ export default function Like({ newsId, onLikeChange }: LikeProps) {
   const [fetching, setFetching] = useState<boolean>(true);
 
   // Fetch like data on component mount
-  useEffect(() => {
-    fetchLikeData();
+  const fetchLikeData = useCallback(async () => {
+    try {
+      setFetching(true);
+      const response = await axios.get(`${API}/api/like/news/${newsId}`, {
+        withCredentials: true,
+      });
+      setLikeCount(response.data.totalLikes);
+      
+      // ✅ Use the dedicated field from backend, not the total list length
+      setIsLiked(response.data.userHasLiked);
+    } catch (err: any) {
+      console.error('Error fetching likes:', err);
+    } finally {
+      setFetching(false);
+    }
   }, [newsId]);
 
-  const fetchLikeData = async () => {
-  try {
-    setFetching(true);
-    const response = await axios.get(`${API}/api/like/news/${newsId}`, {
-      withCredentials: true,
-    });
-    setLikeCount(response.data.totalLikes);
-    
-    // ✅ Use the dedicated field from backend, not the total list length
-    setIsLiked(response.data.userHasLiked);
-  } catch (err: any) {
-    console.error('Error fetching likes:', err);
-  } finally {
-    setFetching(false);
-  }
-};
+  useEffect(() => {
+    fetchLikeData();
+  }, [fetchLikeData]);
 
   const handleLikeToggle = async (e: React.MouseEvent) => {
     e.stopPropagation();

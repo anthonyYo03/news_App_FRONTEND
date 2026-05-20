@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { FiMessageCircle, FiSend, FiX, FiTrash2, FiEdit2, FiCheck } from 'react-icons/fi';
@@ -75,38 +75,16 @@ export default function Comments({ newsId, newsTitle, currentUserId }: CommentsP
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
 
-  // Fetch comment count on mount (for the badge)
-  useEffect(() => {
-    fetchCommentCount();
-  }, [newsId]);
-
-  // Fetch comments when modal opens
-  useEffect(() => {
-    if (open) {
-      setComments([]);
-      setOffset(0);
-      fetchComments(0, true);
-      setTimeout(() => inputRef.current?.focus(), 300);
-    }
-  }, [open]);
-
-  // Close on Escape
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpen(false); };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, []);
-
-  const fetchCommentCount = async () => {
+  const fetchCommentCount = useCallback(async () => {
     try {
       const res = await axios.get(`${API}/api/comment/newsComments/${newsId}?limit=1&offset=0`, {
         withCredentials: true,
       });
       setTotalComments(res.data.totalComments);
     } catch (_) {}
-  };
+  }, [newsId]);
 
-  const fetchComments = async (offsetVal: number, reset = false) => {
+  const fetchComments = useCallback(async (offsetVal: number, reset = false) => {
     try {
       setFetching(true);
       const res = await axios.get(
@@ -124,7 +102,29 @@ export default function Comments({ newsId, newsTitle, currentUserId }: CommentsP
     } finally {
       setFetching(false);
     }
-  };
+  }, [newsId]);
+
+  // Fetch comment count on mount (for the badge)
+  useEffect(() => {
+    fetchCommentCount();
+  }, [fetchCommentCount]);
+
+  // Fetch comments when modal opens
+  useEffect(() => {
+    if (open) {
+      setComments([]);
+      setOffset(0);
+      fetchComments(0, true);
+      setTimeout(() => inputRef.current?.focus(), 300);
+    }
+  }, [open, fetchComments]);
+
+  // Close on Escape
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpen(false); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
 
   const handleSubmit = async () => {
     if (!message.trim() || loading) return;
